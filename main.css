@@ -1,0 +1,41 @@
+body {
+	margin:0px 0px; padding:0px;
+	text-align:center;
+	}
+	
+#page {
+	width:500px;
+	margin:0px auto;
+	text-align:center;
+	padding:15px;
+	border:1px groove #333;
+	background-color:#eee;
+	}
+	
+#canvas {
+	 borderx: 1px solid black; 
+	 xbackground-color: #ddd;
+	 margin: auto;
+	}
+	
+#banner {
+	background-color: #333;
+	color: #eee;
+	margin-bottom: 20px;
+	text-align: right;
+	padding: 5px 40px 5px 0px;
+}
+	
+#intro {
+	font-family:"Times New Roman", Times, serif;
+	font-style:normal;
+	font-size:14px;
+	margin-bottom: 5px;
+}
+
+#score {
+	text-align: right;
+	color: #f00;
+	font-family: Times, serif;
+	font-weight: bold;
+}
