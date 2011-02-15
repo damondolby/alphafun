@@ -1,0 +1,225 @@
+<html>
+	<head>
+		<script src="jquery-1.5.js"></script>
+		<script type="application/javascript">
+
+		var x;
+		var y;
+		var t;
+		var width = 400;
+		var height = 400;
+		var correct = 0;
+		var goes = 0;
+		var limit = 5;
+		var run = 0;
+
+		var ls = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+		var cs = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90];
+		var c_idx;
+
+		function init(){
+			//resetxy();
+			
+			//c_idx = Math.floor(Math.random()*27)-1;
+			
+			$(document).keydown(listen);
+			
+			canvasStart();
+			
+			//play();	
+		}
+
+		function listen(event){			
+			
+			if (run == 0)
+			{
+				//game end
+				startGame();
+			}
+			else
+			{
+				//mid-game
+				if (event.keyCode == cs[c_idx])
+				{
+					//alert('You pressed '+event.keyCode);
+					correct++;
+					updateLetter();
+				}
+			}
+			event.preventDefault();			
+		}
+		
+		function updateScore()
+		{
+			document.getElementById("correct").innerHTML = correct;
+			document.getElementById("goes").innerHTML = goes;
+		}
+
+		function resetxy()
+		{
+			x = 0;
+			y = 75;
+		}		
+		
+		function updateLetter()
+		{
+			goes++;
+			updateScore();
+			
+			if (goes >= limit)
+			{
+				clearTimeout(t);
+				run = 0;
+				canvasEnd();
+				return;
+			}
+			c_idx = Math.floor(Math.random()*26);
+			//element = document.getElementById("idx").innerHTML = c_idx;
+			resetxy();
+			//play();	
+		}
+		
+		function startGame()
+		{
+			goes = -1;
+			correct = 0;
+			run = 1;
+			updateLetter();
+			play();	
+		}
+
+		function play(){
+
+			//document.getElementById("dt").innerHTML = new Date();
+			var canvas = document.getElementById('canvas');
+			if (canvas.getContext){
+				
+				var ctx = canvas.getContext('2d');
+				ctx.clearRect(0,0,width,height); // clear canvas
+
+				ctx.beginPath();	
+				
+				ctx.font  = 'bold 120px sans-serif';
+				ctx.fillStyle = "orange";
+				ctx.fillText(ls[c_idx], x, y);
+			
+				//ctx.strokeStyle = "orange";
+				
+				
+				ctx.closePath();
+				ctx.stroke();
+				
+				
+				if (x >= width-20)
+				{
+					updateLetter()
+				}
+				else
+				{
+					x = x + 5;
+					y = y + 5;
+				}
+			}
+			
+			if (run == 1)
+				t=setTimeout("play()",75);
+		}
+		
+		function canvasStart(){
+			var canvas = document.getElementById('canvas');
+			if (canvas.getContext){
+				
+				var ctx = canvas.getContext('2d');
+				ctx.clearRect(0,0,width,height); // clear canvas
+
+				ctx.beginPath();	
+				
+				ctx.font  = 'bold 40px sans-serif';
+				ctx.fillStyle = "orange";
+				ctx.fillText("Press any key", 50, 125);
+				ctx.fillText("to start...", 90, 175);
+			}
+		}
+		
+		function canvasEnd(){
+			var canvas = document.getElementById('canvas');
+			if (canvas.getContext){
+				
+				var ctx = canvas.getContext('2d');
+				ctx.clearRect(0,0,width,height); // clear canvas
+
+				ctx.beginPath();	
+				
+				ctx.font  = 'bold 40px sans-serif';
+				
+				ctx.fillStyle = "red";
+				ctx.fillText(correct + " out of " + goes + "!", 50, 125);
+				
+				ctx.fillStyle = "orange";
+				ctx.fillText("Press any key", 50, 225);
+				ctx.fillText("to start...", 90, 275);
+			}
+		}
+		
+		</script>
+		<style>
+			body {
+				margin:0px 0px; padding:0px;
+				text-align:center;
+				}
+				
+			#page {
+				width:500px;
+				margin:0px auto;
+				text-align:center;
+				padding:15px;
+				border:1px groove #333;
+				background-color:#eee;
+				}
+				
+			#canvas {
+				 borderx: 1px solid black; 
+				 xbackground-color: #ddd;
+				 margin: auto;
+				}
+				
+			#banner {
+				background-color: #333;
+				color: #eee;
+				margin-bottom: 20px;
+				text-align: right;
+				padding: 5px 40px 5px 0px;
+			}
+				
+			#intro {
+				font-family:"Times New Roman", Times, serif;
+				font-style:normal;
+				font-size:14px;
+				margin-bottom: 5px;
+			}
+			
+			#score {
+				text-align: right;
+				color: #f00;
+				font-family: Times, serif;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body onload="init();" id="body">
+		<div id="banner">
+			Alphafun 		
+		</div>
+		<div id="page">			
+			<div id="intro">
+				A game for toddlers.
+			</div>
+			<div id="score">
+				Score:&nbsp;<span id="correct">0</span>/<span id="goes">0</span>
+			</div>
+			<canvas id="canvas" width="400" height="400" style=""></canvas>						
+		</div>
+		<span id="idx"></span>
+		<span id="dt"></span>
+	</body>
+</html>
