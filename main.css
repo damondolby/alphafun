@@ -9,7 +9,7 @@ body {
 	text-align:center;
 	padding:15px;
 	border:1px groove #333;
-	background-color:#eee;
+	background-color:#fff;
 	}
 	
 #canvas {
@@ -34,8 +34,18 @@ body {
 }
 
 #score {
-	text-align: right;
+	display: inline;
+	xmargin-left: 365px;
+	float: right;
+	xborder: red solid 1px;
+}
+
+#lives {
+	text-align: left;
 	color: #f00;
 	font-family: Times, serif;
 	font-weight: bold;
+	width: 500px;
+	xborder: blue solid 1px;
+	float: left;
 }
