@@ -9,7 +9,7 @@ body {
 	text-align:center;
 	padding:15px;
 	border:1px groove #333;
-	background-color:#fff;
+	background-color:#eff;
 	}
 	
 #canvas {
@@ -34,7 +34,7 @@ body {
 }
 
 #score {
-	display: inline;
+	zdisplay: inline;
 	xmargin-left: 365px;
 	float: right;
 	xborder: red solid 1px;
@@ -45,7 +45,7 @@ body {
 	color: #f00;
 	font-family: Times, serif;
 	font-weight: bold;
-	width: 500px;
+	width: 490px;
 	xborder: blue solid 1px;
 	float: left;
 }

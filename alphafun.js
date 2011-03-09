@@ -7,7 +7,7 @@ var height = 300;
 //var goes = 0;
 var limit = 5;
 var run = 0;
-var lives = 3;
+var lives;
 var score_incr = 10;
 var score = 0;
 var speed;
@@ -20,6 +20,17 @@ var colours = ["orange", "red", "blue", "green", "yellow"];
 var rgb1;
 var rgb2;
 //var e_colour = new Enumerator(colours);
+
+  // The hue spectrum used by HSV color picker charts.
+  var color, hue = [
+    [255,   0,   0 ], // 0, Red,       0°
+    [255, 255,   0 ], // 1, Yellow,   60°
+    [  0, 255,   0 ], // 2, Green,   120°
+    [  0, 255, 255 ], // 3, Cyan,    180°
+    [  0,   0, 255 ], // 4, Blue,    240°
+    [255,   0, 255 ], // 5, Magenta, 300°
+    [255,   0,   0]] // 6, Red,     360°
+
 
 function init(){
 	//resetxy();
@@ -118,7 +129,7 @@ function startGame()
 {	
 	//goes = -1;
 	//correct = 0;
-	lives = 5;
+	lives = 3;
 	score = 0;
 	speed = 20;
 	run = 1;
@@ -141,10 +152,26 @@ function play(){
 		//ctx.fillStyle = current_colour;
 		//ctx.strokeStyle = "black";
 		
-		var gradient = ctx.createLinearGradient(x, y, x+30, y+30);
+		var gradient = ctx.createLinearGradient(0, 0, width, height);
 		// Add 2 steps to it
-		gradient.addColorStop(0, rgb1);
-		gradient.addColorStop(1, rgb2);
+		//gradient.addColorStop(0, rgb1);
+		//gradient.addColorStop(1, rgb2);
+		
+		  // Add the color stops.
+		  for (var i = 0; i <= 6; i++) {
+		    color = 'rgb(' + hue[i][0] + ', ' + hue[i][1] + ', ' + hue[i][2] + ')';
+		    gradient.addColorStop(i * 1/27, color);
+			//gradient.addColorStop(i * 1/13, color);
+		    gradient.addColorStop((i+7) * 1/27, color);
+			  gradient.addColorStop((i+14) * 1/27, color);
+			  gradient.addColorStop((i+21) * 1/27, color);
+		  }		
+		  
+/*		  for (var i = 0; i <= 6; i++) {
+		    color = 'rgb(' + hue[i][0] + ', ' + hue[i][1] + ', ' + hue[i][2] + ')';
+		    gradient.addColorStop((i+7) * 1/13, color);
+		  }		*/
+		
 		// Assign our gradient to the fillStyle
 		ctx.fillStyle = gradient;
 
