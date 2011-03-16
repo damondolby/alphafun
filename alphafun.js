@@ -1,8 +1,22 @@
+/*constants*/
+var width = 300;
+var height = 300;
+var ls = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+var cs = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90];
+var color, hue = [
+    [255,   0,   0 ], // 0, Red,       0°
+    [255, 255,   0 ], // 1, Yellow,   60°
+    [  0, 255,   0 ], // 2, Green,   120°
+    [  0, 255, 255 ], // 3, Cyan,    180°
+    [  0,   0, 255 ], // 4, Blue,    240°
+    [255,   0, 255 ], // 5, Magenta, 300°
+    [255,   0,   0]] // 6, Red,     360°
+
+
+
 var x;
 var y;
 var t;
-var width = 300;
-var height = 300;
 //var correct = 0;
 //var goes = 0;
 var limit = 5;
@@ -12,24 +26,22 @@ var score_incr = 10;
 var score = 0;
 var speed;
 
-var ls = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-var cs = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90];
-var c_idx;
-var colours = ["orange", "red", "blue", "green", "yellow"];
+//var colours = ["orange", "red", "blue", "green", "yellow"];
 //var current_colour;
-var rgb1;
-var rgb2;
+//var rgb1;
+//var rgb2;
 //var e_colour = new Enumerator(colours);
 
   // The hue spectrum used by HSV color picker charts.
-  var color, hue = [
-    [255,   0,   0 ], // 0, Red,       0°
-    [255, 255,   0 ], // 1, Yellow,   60°
-    [  0, 255,   0 ], // 2, Green,   120°
-    [  0, 255, 255 ], // 3, Cyan,    180°
-    [  0,   0, 255 ], // 4, Blue,    240°
-    [255,   0, 255 ], // 5, Magenta, 300°
-    [255,   0,   0]] // 6, Red,     360°
+  
+var c_idx;
+  
+//function Level(letters){
+//	this.letters = letters;
+//	
+	
+		
+//}
 
 
 function init(){
@@ -113,8 +125,8 @@ function updateLetter()
 	c_idx = Math.floor(Math.random()*26);
 	//current_colour = colours[Math.floor(Math.random()*5)];
 		// Add 2 steps to it
-	rgb1 = "rgb("+getRandonNumber(155)+","+getRandonNumber(155)+","+getRandonNumber(155)+")";
-	rgb2 = "rgb("+getRandonNumber(155)+","+getRandonNumber(155)+","+getRandonNumber(155)+")";
+	//rgb1 = "rgb("+getRandonNumber(155)+","+getRandonNumber(155)+","+getRandonNumber(155)+")";
+	//rgb2 = "rgb("+getRandonNumber(155)+","+getRandonNumber(155)+","+getRandonNumber(155)+")";
 	//element = document.getElementById("idx").innerHTML = c_idx;
 	resetxy();
 	//play();	

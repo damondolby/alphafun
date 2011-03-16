@@ -3,7 +3,7 @@ body {
 	text-align:center;
 	}
 	
-#page {
+#page2 {
 	width:500px;
 	margin:0px auto;
 	text-align:center;
@@ -11,6 +11,33 @@ body {
 	border:1px groove #333;
 	background-color:#eff;
 	}
+	
+#page {
+	width:500px;
+	margin:0px auto;
+	text-align:center;
+	padding:15px;
+	border-radius:34px;
+	-moz-border-radius:34px;
+	-webkit-border-radius:34px;
+	/*IE DOES NOT SUPPORT BORDER RADIUS*/
+	box-shadow:0px 0px 16px #000000;
+	-moz-box-shadow:0px 0px 16px #000000;
+	-webkit-box-shadow:0px 0px 16px #000000;
+	/*IE DOES NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+	background: linear-gradient(top, #63b0ff, #c2eeff);
+	/*--OPERA & IE9 DO NOT SUPPORT GRADIENT BACKGROUNDS--*/
+	background: -moz-linear-gradient(top, #63b0ff, #c2eeff);
+	background: -webkit-gradient(linear, center top, center bottom, from(#63b0ff), to(#c2eeff));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#63b0ff', endColorstr='#c2eeff');
+	/*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+	/*Element must have a height (not auto)*/
+	/*All filters must be placed together*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#63b0ff', endColorstr='#c2eeff')";
+	/*Element must have a height (not auto)*/
+	/*All filters must be placed together*/
+
+}
 	
 #canvas {
 	 borderx: 1px solid black; 
