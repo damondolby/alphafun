@@ -76,3 +76,16 @@ body {
 	xborder: blue solid 1px;
 	float: left;
 }
+
+#game {
+	text-align: right;
+	color: #00f;
+	font-family: Times, serif;
+	font-weight: bold;
+	width: 490px;
+	float: left;
+}
+
+#game span {
+	margin-right: 10px;
+}
