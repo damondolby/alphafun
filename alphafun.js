@@ -12,21 +12,21 @@ var color, hue = [
     [255,   0, 255 ], // 5, Magenta, 300°
     [255,   0,   0]] // 6, Red,     360°
 
-var totalscore = 0;
-var totalmissed = 0;
-var game;
+var gamescore = 0;
+var gamemissed = 0;
+var level;
 var levelno = 1;
 var maxgoes = 10;
-var gametotal = 5;
+var leveltotal = 5;
 var movedis = 4;
 
-function Game(level) {
+function Level(letters) {
 	this.lives = 3;
 	this.missed = 0;
 	this.speed = 30;
 	this.score = 0;
 	this.active = 0;
-	this.level = level;
+	this.letters = letters;
 	this.score_incr = 10;
 	this.timeout;
 	//this.x = 0;
@@ -59,7 +59,7 @@ function Game(level) {
 	
 	this.gotcorrect = function () {
 		this.score += this.score_incr;
-		totalscore += this.score_incr;
+		gamescore += this.score_incr;
 		this.go++;
 		this.updatescore();	
 		
@@ -68,20 +68,20 @@ function Game(level) {
 		else
 		{			
 			this.increasespeed();
-			this.level.updateletter();
+			this.letters.updateletter();
 			this.resetxy();
 		}
 	}
 	
 	this.keypressed = function (keycode) {
-		if(this.level.keypressed(keycode))
+		if(this.letters.keypressed(keycode))
 			this.gotcorrect();
 	}
 	
 	this.gotwrong = function () {
 		//this.lives--;
 		this.missed++;
-		totalmissed++;
+		gamemissed++;
 		this.go++;
 		this.updatescore();	
 		
@@ -95,29 +95,29 @@ function Game(level) {
 		//	this.end();
 		//}
 		//else {
-			this.level.updateletter();
+			this.letters.updateletter();
 			this.resetxy();
 		//}			
 		}
 	}
 	
 	this.updatescore = function () {
-		document.getElementById("gamemissed").innerHTML = this.missed;
-		document.getElementById("gamescore").innerHTML = this.score;
-		document.getElementById("totalscore").innerHTML = totalscore;
-		document.getElementById("totalmissed").innerHTML = totalmissed;		
+		document.getElementById("levelmissed").innerHTML = this.missed;
+		document.getElementById("levelscore").innerHTML = this.score;
+		document.getElementById("gamescore").innerHTML = gamescore;
+		document.getElementById("gamemissed").innerHTML = gamemissed;		
 	}
 	
 	this.start = function () {
 		this.active = 1;
 		this.updatescore();
-		this.level.updateletter();
+		this.letters.updateletter();
 		this.resetxy();
 		this.play();
 	}
 	
 	this.end = function () {
-		//totalscore += this.score;
+		//gamescore += this.score;
 		clearTimeout(this.timeout);
 		this.active = 0;
 		document.getElementById("letter2").innerHTML = "end";
@@ -159,8 +159,8 @@ function play() {
 			  
 			  
 			  
-			//ctx.fillText(ls[this.level.letters[0]], this.x, this.y);
-			  ctx.fillText(this.level.concatenate(), this.coords.x, this.coords.y);
+			//ctx.fillText(ls[this.letters.letters[0]], this.x, this.y);
+			  ctx.fillText(this.letters.concatenate(), this.coords.x, this.coords.y);
 			ctx.closePath();                                
 			ctx.stroke();
 			
@@ -175,13 +175,13 @@ function play() {
 		}
 		
 		if (this.active == 1) {
-				//use closure to recursively call play so it can reference Game fields
+				//use closure to recursively call play so it can reference Level fields
 				var gthis = this
 				timeout=setTimeout(function(){ gthis.play();}, this.speed);
 		}
 	//}
 }
-Game.prototype.play = play;
+Level.prototype.play = play;
 
 function coords(xstart, ystart, xmove, ymove, gone) {
 	this.xstart = xstart;
@@ -296,35 +296,35 @@ function coords4() {
 function init() {
 	$(document).keydown(listen);	
 	canvastext();
-	document.getElementById("gametotal").innerHTML = gametotal;
+	document.getElementById("leveltotal").innerHTML = leveltotal;
 	//updateScore();
 }
 
 function listen(event) {			
 	
-	if (game == null || game.active == 0) {
-		if (levelno > gametotal) {
-			totalscore = 0;
-			totalmissed = 0;
+	if (level == null || level.active == 0) {
+		if (levelno > leveltotal) {
+			gamescore = 0;
+			gamemissed = 0;
 			levelno = 1;
 		}
 		
-//		if (levelno <= gametotal)	{
+//		if (levelno <= leveltotal)	{
 			if (event.keyCode == 13) {
-				document.getElementById("gamecurr").innerHTML = levelno;
-				game = new Game(new Level(levelno++));	
-				game.start();
+				document.getElementById("levelno").innerHTML = levelno;
+				level = new Level(new Letters(levelno++));	
+				level.start();
 			}
 //		}
 	}
 	else	{
-		game.keypressed(event.keyCode);
+		level.keypressed(event.keyCode);
 	}
 	event.preventDefault();			
 }
 
 
-function Level(noofletters) {
+function Letters(noofletters) {
 	this.letters = new Array(noofletters);
 	this.letterscorrect = 0;	
 	
@@ -364,12 +364,6 @@ function getRandonNumber(upper) {
 	return Math.floor(Math.random()*upper);
 }
 
-/*function startGame() {	
-	level = new Level(1);
-	game = new Game(level);	
-	game.start();
-}*/
-
 function canvastext() {
 	var canvas = document.getElementById('canvas');
 	if (canvas.getContext){
@@ -383,13 +377,13 @@ function canvastext() {
 				
 		ctx.font  = 'bold 20px sans-serif';
 		ctx.fillStyle = "blue";
-		if (levelno > gametotal)
+		if (levelno > leveltotal)
 		{
-			ctx.fillText("All games complete", 5, 125);
+			ctx.fillText("Levels complete", 5, 125);
 			ctx.fillText("Thank you for playing", 7, 145);
 			ctx.fillText("Press return for new game...", 9, 165);
 		}
 		else			
-			ctx.fillText("Press return for game " + levelno, 5, 125);
+			ctx.fillText("Press return for level " + levelno, 5, 125);
 	}
 }

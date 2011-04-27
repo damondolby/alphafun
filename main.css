@@ -67,7 +67,7 @@ body {
 	xborder: red solid 1px;
 }
 
-#lives {
+#game {
 	text-align: left;
 	color: #f00;
 	font-family: Times, serif;
@@ -77,7 +77,7 @@ body {
 	float: left;
 }
 
-#game {
+#level {
 	text-align: right;
 	color: #00f;
 	font-family: Times, serif;
@@ -86,6 +86,16 @@ body {
 	float: left;
 }
 
-#game span {
+#level span {
 	margin-right: 10px;
+}
+
+#high {
+	text-align: center;
+	color: purple;
+	font-family: Times, serif;
+	font-weight: bold;
+	width: 490px;
+	xfloat: left;
+	xmargin-bottom: 5px;
 }
