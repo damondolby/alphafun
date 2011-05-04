@@ -19,6 +19,7 @@ var levelno = 1;
 var maxgoes = 10;
 var leveltotal = 5;
 var movedis = 4;
+var highscore;
 
 function Level(letters) {
 	this.lives = 3;
@@ -203,97 +204,11 @@ function coords(xstart, ystart, xmove, ymove, gone) {
 		this.y = this.ystart;
 	}
 	
-	//this.gone = function() {
-	//	return this.y >= ylimit;
-	//}
-	
 	this.reset();
 }
 
-/*
-function coords1() {
-	this.x = width;
-	this.y = 0;
-	this.move = 4;
-	
-	this.increment = function() {
-		this.x -= this.move;
-		this.y += this.move;
-	}
-	
-	this.reset = function() {
-		this.x = width;
-		this.y = 0;
-	}
-	
-	this.gone = function() {
-		return this.y >= height - 25;
-	}
-}
-
-function coords2() {
-	this.x = 0;
-	this.y = height;
-	this.move = 4;
-	
-	this.increment = function() {
-		this.x += this.move;
-		this.y -= this.move;
-	}
-	
-	this.reset = function() {
-		this.x = 0;
-		this.y = height;
-	}
-	
-	this.gone = function() {
-		return this.y <= 25;
-	}
-}
-
-function coords3() {
-	this.x = width;
-	this.y = height;
-	this.move = 4;
-	
-	this.increment = function() {
-		this.x -= this.move;
-		this.y -= this.move;
-	}
-	
-	this.reset = function() {
-		this.x = width;
-		this.y = height;
-	}
-	
-	this.gone = function() {
-		return this.y <= 25;
-	}
-}
-
-
-function coords4() {
-	this.x = 0;
-	this.y = 0;
-	this.move = 4;
-	
-	this.increment = function() {
-		this.x += this.move;
-		this.y += this.move;
-	}
-	
-	this.reset = function() {
-		this.x = 0;
-		this.y = 0;
-	}
-	
-	this.gone = function() {
-		return this.y >= height-25;
-	}
-}
-*/
-
 function init() {
+	initHighScoreFromCookie();
 	$(document).keydown(listen);	
 	canvastext();
 	document.getElementById("leveltotal").innerHTML = leveltotal;
@@ -379,6 +294,7 @@ function canvastext() {
 		ctx.fillStyle = "blue";
 		if (levelno > leveltotal)
 		{
+			setCookie();
 			ctx.fillText("Levels complete", 5, 125);
 			ctx.fillText("Thank you for playing", 7, 145);
 			ctx.fillText("Press return for new game...", 9, 165);
@@ -386,4 +302,40 @@ function canvastext() {
 		else			
 			ctx.fillText("Press return for level " + levelno, 5, 125);
 	}
+}
+
+
+function highScore(score, missed){
+	this.score = score;
+	this.missed = missed;
+}
+
+function setCookie(){	
+	if (gamescore > highscore.score) {
+		highscore.score = gamescore;
+		highscore.missed = gamemissed;
+	}
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate() + 365);
+	document.cookie = "score=" + highscore.score + "#missed=" + highscore.missed + "; expires=" + exdate.toUTCString();		
+	document.getElementById("highscore").innerHTML = highscore.score;
+	document.getElementById("highmissed").innerHTML = highscore.missed;
+}
+
+function initHighScoreFromCookie(){	
+	try{
+		var cookie = document.cookie.split("#");
+		var score = cookie[0].split("=")[1];
+		var missed = cookie[1].split("=")[1];
+		if (parseInt(score) && parseInt(missed)){
+			highscore = new highScore(score, missed);
+		}
+	}
+	catch(er){
+	}
+	if (highscore == null)
+		highscore = new highScore(0, 0);
+	
+	document.getElementById("highscore").innerHTML = highscore.score;
+	document.getElementById("highmissed").innerHTML = highscore.missed;
 }
