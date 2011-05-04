@@ -54,13 +54,13 @@ function Level(letters) {
 		if (this.speed >= 1)
 		{
 			this.speed = this.speed - 3;
-			document.getElementById("speed").innerHTML = this.speed;
+			//document.getElementById("speed").innerHTML = this.speed;
 		}
 	}
 	
 	this.gotcorrect = function () {
-		this.score += this.score_incr;
-		gamescore += this.score_incr;
+		this.score += this.score_incr*this.letters.currlettercount;
+		gamescore += this.score_incr*this.letters.currlettercount;
 		this.go++;
 		this.updatescore();	
 		
@@ -121,7 +121,6 @@ function Level(letters) {
 		//gamescore += this.score;
 		clearTimeout(this.timeout);
 		this.active = 0;
-		document.getElementById("letter2").innerHTML = "end";
 		canvastext();			
 	}
 }
