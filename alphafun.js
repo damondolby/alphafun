@@ -25,7 +25,7 @@ function Game() {
 	
 	Game.prototype.startnextlevel = function() {
 		document.getElementById("levelno").innerHTML = this.levelno;
-		Game.prototype.level = new Level(this,new Letters(this.levelno++));
+		Game.prototype.level = new Level(this,this.levelno++);
 		this.level.start();
 	}	
 	
@@ -40,10 +40,11 @@ function Level(game, letters) {
 	this.speed = 30;
 	this.score = 0;
 	this.active = 0;
-	Level.prototype.letters = letters;
+	Level.prototype.letters = new Letters(letters);
 	Level.prototype.play = play;
 	this.score_incr = 10;
 	this.timeout;
+	//document.getElementById("test").innerHTML = this.movedis;
 	Level.prototype.coordsls = [new Coords(0,0,game.movedis,game.movedis,function() {return this.y >= height-25;}), 
 				 new Coords(width,0,-game.movedis,game.movedis,function() {return this.y >= height-25;}), 
 				 new Coords(0,height,game.movedis,-game.movedis,function() {return this.y <= 25;}), 
@@ -199,7 +200,7 @@ function play() {
 					
 		// Assign our gradient to the fillStyle
 		ctx.fillStyle = gradient;	  
-		document.getElementById("test").innerHTML = this.coords.xstart;
+		//document.getElementById("test").innerHTML = this.coords.xstart;
 		ctx.fillText(this.letters.concatenate(), this.coords.x, this.coords.y);			
 		ctx.closePath();                                
 		ctx.stroke();
