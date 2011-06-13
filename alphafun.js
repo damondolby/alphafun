@@ -22,24 +22,17 @@ function Game() {
 	this.maxgoes = 10;
 	this.leveltotal = 5;
 	this.movedis = 4;
-	//this.level;
-	//var self = this;
 	
-	this.startnextlevel = function() {
+	Game.prototype.startnextlevel = function() {
 		document.getElementById("levelno").innerHTML = this.levelno;
-		//this.level = new Level(new Letters(this.levelno++));	
-		this.level = new Level(this,new Letters(this.levelno++));
+		Game.prototype.level = new Level(this,new Letters(this.levelno++));
 		this.level.start();
-	}
+	}	
 	
-	
-	this.levelsdone = function()  {
+	Game.prototype.levelsdone = function()  {
 		return this.levelno > this.leveltotal;
-	}
-	
+	}	
 }
-
-
 
 function Level(game, letters) {
 	this.lives = 3;
@@ -47,32 +40,27 @@ function Level(game, letters) {
 	this.speed = 30;
 	this.score = 0;
 	this.active = 0;
-	this.letters = letters;
+	Level.prototype.letters = letters;
+	Level.prototype.play = play;
 	this.score_incr = 10;
 	this.timeout;
-	//this.x = 0;
-	//this.y = 75;
-	//this.coordsls = [new coords1(), new coords2(), new coords3(), new coords4()];
-	//document.getElementById("test").innerHTML = game.movthisedis;
-	//document.getElementById("test2").innerHTML = this.movedis;
-	this.coordsls = [new coords(0,0,game.movedis,game.movedis,function() {return this.y >= height-25;}), 
-				 new coords(width,0,-game.movedis,game.movedis,function() {return this.y >= height-25;}), 
-				 new coords(0,height,game.movedis,-game.movedis,function() {return this.y <= 25;}), 
-				 new coords(width,height,-game.movedis,-game.movedis,function() {return this.y <= 25;})]
-	//this.coords = this.coordsls[0];
+	Level.prototype.coordsls = [new Coords(0,0,game.movedis,game.movedis,function() {return this.y >= height-25;}), 
+				 new Coords(width,0,-game.movedis,game.movedis,function() {return this.y >= height-25;}), 
+				 new Coords(0,height,game.movedis,-game.movedis,function() {return this.y <= 25;}), 
+				 new Coords(width,height,-game.movedis,-game.movedis,function() {return this.y <= 25;})]
 	this.font = 'bold 120px sans-serif';
 	this.go = 0;	
 	
-	this.resetxy = function()  {
+	Level.prototype.resetxy = function()  {
 		this.coords = this.coordsls[getRandonNumber(4)];
 		this.coords.reset();
 	}	
 	
-	this.incrementxy = function() {
+	Level.prototype.incrementxy = function() {
 		this.coords.increment();
 	}
 	
-	this.increasespeed = function () {
+	Level.prototype.increasespeed = function () {
 		if (this.speed >= 1)
 		{
 			this.speed = this.speed - 3;
@@ -80,7 +68,7 @@ function Level(game, letters) {
 		}
 	}
 	
-	this.gotcorrect = function () {
+	Level.prototype.gotcorrect = function () {
 		this.score += this.score_incr*this.letters.currlettercount;
 		game.gamescore += this.score_incr*this.letters.currlettercount;
 		this.go++;
@@ -96,12 +84,12 @@ function Level(game, letters) {
 		}
 	}
 	
-	this.keypressed = function (keycode) {
+	Level.prototype.keypressed = function (keycode) {
 		if(this.letters.keypressed(keycode))
 			this.gotcorrect();
 	}
 	
-	this.gotwrong = function () {
+	Level.prototype.gotwrong = function () {
 		//this.lives--;
 		this.missed++;
 		game.gamemissed++;
@@ -112,40 +100,77 @@ function Level(game, letters) {
 			this.end();
 		else
 		{
-		
-			
-		//if (this.lives <= 0) {
-		//	this.end();
-		//}
-		//else {
 			this.letters.updateletter();
 			this.resetxy();
-		//}			
 		}
 	}
 	
-	this.updatescore = function () {
+	Level.prototype.updatescore = function () {
 		document.getElementById("levelmissed").innerHTML = this.missed;
 		document.getElementById("levelscore").innerHTML = this.score;
 		document.getElementById("gamescore").innerHTML = game.gamescore;
 		document.getElementById("gamemissed").innerHTML = game.gamemissed;		
 	}
 	
-	this.start = function () {
-		//this.letters = letters;
+	Level.prototype.start = function () {
 		this.active = 1;
 		this.updatescore();
 		this.letters.updateletter();
 		this.resetxy();
-		//document.getElementById("test").innerHTML = this.coords.x;
 		this.play();
 	}
 	
-	this.end = function () {
-		//gamescore += this.score;
+	Level.prototype.end = function () {
 		clearTimeout(this.timeout);
 		this.active = 0;
 		canvastext();			
+	}	
+}
+
+function Coords(xstart, ystart, xmove, ymove, gone) {
+	this.xstart = xstart;
+	this.ystart = ystart;
+	this.xmove = xmove;
+	this.ymove = ymove;
+	this.gone = gone;
+	
+	Coords.prototype.increment = function() {
+		this.x += this.xmove;
+		this.y += this.ymove;
+	}
+	
+	Coords.prototype.reset = function() {
+		this.x = this.xstart;
+		this.y = this.ystart;
+	}
+	
+	this.reset();
+}
+
+function Letters(noofletters) {
+	this.letters = new Array(noofletters);
+	this.letterscorrect = 0;	
+	
+	Letters.prototype.updateletter = function () {
+		this.currlettercount = getRandonNumber(this.letters.length)+1;
+		for (i=0; i<this.currlettercount; i++)
+			this.letters[i] = getRandonNumber(26);
+		
+		this.letterscorrect = 0;		
+	}
+	
+	Letters.prototype.concatenate = function() {
+		var r = "";
+		for (i=0; i<this.currlettercount; i++)
+			r += ls[this.letters[i]];
+		return r;
+	}
+	
+	Letters.prototype.keypressed = function(keycode) {
+		if (keycode == cs[this.letters[this.letterscorrect]])
+			this.letterscorrect++;
+		
+		return this.currlettercount == this.letterscorrect;
 	}
 }
 
@@ -154,95 +179,50 @@ function play() {
 	if (this.active == 0)
 		return;
 
-	//with (this) {
-		//document.getElementById("dt").innerHTML = new Date();
-		var canvas = document.getElementById('canvas');
-		if (canvas.getContext){
-			var ctx = canvas.getContext('2d');
-			ctx.clearRect(0,0,width,height); // clear canvas
-			ctx.beginPath();	
+	var canvas = document.getElementById('canvas');
+	if (canvas.getContext){
+		var ctx = canvas.getContext('2d');
+		ctx.clearRect(0,0,width,height); // clear canvas
+		ctx.beginPath();	
 			
-			///ctx.font  = this.font;			
-			ctx.font = 'bold 60px sans-serif';
-			//ctx.font-size = 120px;
-			//ctx.font-weight = bold;
-			var gradient = ctx.createLinearGradient(0, 0, width, height);
-			
-			  // Add the color stops.
-			  for (var i = 0; i <= 6; i++) {
-			    color = 'rgb(' + hue[i][0] + ', ' + hue[i][1] + ', ' + hue[i][2] + ')';
-			    gradient.addColorStop(i * 1/27, color);
-				//gradient.addColorStop(i * 1/13, color);
-			    gradient.addColorStop((i+7) * 1/27, color);
-				  gradient.addColorStop((i+14) * 1/27, color);
-				  gradient.addColorStop((i+21) * 1/27, color);
-			  }		
-			  			
-			// Assign our gradient to the fillStyle
-			ctx.fillStyle = gradient;
-			  
-			  
-			  
-			//ctx.fillText(ls[this.letters.letters[0]], this.x, this.y);
-			  document.getElementById("test").innerHTML = this.coords.xstart;
-			  ctx.fillText(this.letters.concatenate(), this.coords.x, this.coords.y);
-			  //ctx.fillText(this.letters.concatenate(), 50, 50);
-			ctx.closePath();                                
-			ctx.stroke();
-			
-			if (this.coords.gone()) {
-				this.gotwrong();
-			}
-			else {
-				this.incrementxy();
-			}
-			
-			
-		}
+		ctx.font = 'bold 60px sans-serif';
+		var gradient = ctx.createLinearGradient(0, 0, width, height);
 		
-		if (this.active == 1) {
-				//use closure to recursively call play so it can reference Level fields
-				var gthis = this
-				timeout=setTimeout(function(){ gthis.play();}, this.speed);
+		  // Add the color stops.
+		  for (var i = 0; i <= 6; i++) {
+		    color = 'rgb(' + hue[i][0] + ', ' + hue[i][1] + ', ' + hue[i][2] + ')';
+		    gradient.addColorStop(i * 1/27, color);
+		    gradient.addColorStop((i+7) * 1/27, color);
+		    gradient.addColorStop((i+14) * 1/27, color);
+		    gradient.addColorStop((i+21) * 1/27, color);
+		  }		
+					
+		// Assign our gradient to the fillStyle
+		ctx.fillStyle = gradient;	  
+		document.getElementById("test").innerHTML = this.coords.xstart;
+		ctx.fillText(this.letters.concatenate(), this.coords.x, this.coords.y);			
+		ctx.closePath();                                
+		ctx.stroke();
+		
+		if (this.coords.gone()) {
+			this.gotwrong();
 		}
-	//}
-}
-Level.prototype.play = play;
-
-function coords(xstart, ystart, xmove, ymove, gone) {
-	this.xstart = xstart;
-	this.ystart = ystart;
-	this.xmove = xmove;
-	this.ymove = ymove;
-	//this.ylimit = ylimit;
-	this.gone = gone;
-	//this.x = xstart;
-	//this.y = ystart;	
-	//this.x = 200;
-	
-	//document.getElementById("test2").innerHTML = this.xstart;
-	
-	this.increment = function() {
-		this.x += this.xmove;
-		this.y += this.ymove;
+		else {
+			this.incrementxy();
+		}			
 	}
 	
-	this.reset = function() {
-		this.x = this.xstart;
-		this.y = this.ystart;
-		
-		//document.getElementById("test2").innerHTML = this.xmove;
+	if (this.active == 1) {
+			//use closure to recursively call play so it can reference Level fields
+			var gthis = this
+			timeout=setTimeout(function(){ gthis.play();}, this.speed);
 	}
-	
-	this.reset();
 }
 
 function init() {
 	initHighScoreFromCookie();
 	$(document).keydown(listen);	
 	canvastext();
-	//document.getElementById("leveltotal").innerHTML = game.leveltotal;
-	//updateScore();
 }
 
 function listen(event) {			
@@ -263,43 +243,6 @@ function listen(event) {
 	
 	event.preventDefault();			
 }
-
-
-function Letters(noofletters) {
-	this.letters = new Array(noofletters);
-	this.letterscorrect = 0;	
-	
-	this.updateletter = function () {
-		//document.getElementById("letter2").innerHTML = this.letters.length;
-		//this.letters[0] = getRandonNumber(26);
-		this.currlettercount = getRandonNumber(this.letters.length)+1;
-		for (i=0; i<this.currlettercount; i++)
-			this.letters[i] = getRandonNumber(26);
-		
-		this.letterscorrect = 0;		
-	}
-	
-	this.concatenate = function() {
-		//return ls[this.letters[0]];
-		var r = "";
-		for (i=0; i<this.currlettercount; i++)
-			r += ls[this.letters[i]];
-		//document.getElementById("letter2").innerHTML = r;
-		return r;
-	}
-	
-	this.keypressed = function(keycode) {
-		if (keycode == cs[this.letters[this.letterscorrect]])
-			this.letterscorrect++;
-		
-		return this.currlettercount == this.letterscorrect;
-		//if (this.letters.length == this.letterscorrect)
-		//	return true;
-		//else
-		//	return false;
-	}
-}
-
 
 function getRandonNumber(upper) {
 	return Math.floor(Math.random()*upper);
@@ -331,7 +274,6 @@ function canvastext() {
 			ctx.fillText("Press return for level " + game.levelno, 5, 125);
 	}
 }
-
 
 function highScore(score, missed){
 	this.score = score;
