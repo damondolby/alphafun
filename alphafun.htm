@@ -8,20 +8,48 @@
 		<div id="banner">
 			Alphafun 		
 		</div>
-		<div id="page">			
-			<div id="game">
-				Game:&nbsp;&nbsp;Score&nbsp;<span id="gamescore">0</span>&nbsp;
-				Missed&nbsp;<span id="gamemissed">0</span>
+		<div id="page">
+			<div id="gameborder">			
+				<div id="game">
+					Game:&nbsp;&nbsp;Score&nbsp;<span id="gamescore">0</span>&nbsp;
+					Missed&nbsp;<span id="gamemissed">0</span>
+				</div>
+				<div id="level">
+					Level:&nbsp;<span id="levelno" style="margin-right: 0px;">1</span>&nbsp;of&nbsp;<span id="leveltotal"></span>&nbsp;
+					Missed&nbsp;<span id="levelmissed">0</span>&nbsp;
+					Score&nbsp;<span id="levelscore">0</span>
+				</div>
+				<canvas id="canvas" width="400" height="400" style=""></canvas>						
+				<div id="high">
+					High:&nbsp;&nbsp;Score&nbsp;<span id="highscore">0</span>&nbsp;
+					Missed&nbsp;<span id="highmissed">0</span>
+				</div>
 			</div>
-			<div id="level">
-				Level:&nbsp;<span id="levelno" style="margin-right: 0px;">1</span>&nbsp;of&nbsp;<span id="leveltotal"></span>&nbsp;
-				Missed&nbsp;<span id="levelmissed">0</span>&nbsp;
-				Score&nbsp;<span id="levelscore">0</span>
-			</div>
-			<canvas id="canvas" width="400" height="400" style=""></canvas>						
-			<div id="high">
-				High:&nbsp;&nbsp;Score&nbsp;<span id="highscore">0</span>&nbsp;
-				Missed&nbsp;<span id="highmissed">0</span>
+			<div id="options">
+				Number of Levels: <select id="nooflevels">
+					<option value="1">1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option selected="true">5</option>
+				</select><br />
+				Level length:<select id="levellen">
+					<option>5</option>
+					<option selected="true">10</option>
+					<option>20</option>
+					<option>50</option>
+					<option>75</option>
+				</select><br />
+				Speed Start:<select id="speedstart">
+					<option value="100">Easy</option>
+					<option value="50">Medium</option>
+					<option selected="true" value="30">Hard</option>
+				</select><br />	
+				Speed Increment:<select id="speeddecrement">
+					<option value="2">Easy</option>
+					<option selected="true" value="3">Medium</option>
+					<option value="5">Hard</option>
+				</select>
 			</div>
 		</div>
 		<span id="test"></span><br />

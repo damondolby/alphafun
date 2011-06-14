@@ -14,17 +14,20 @@ var color, hue = [
 
 var highscore;
 var game;
+var speedstart;
 
-function Game() {
+function Game(leveltotal, levellen, speeddecr) {
 	this.gamescore = 0;
 	this.gamemissed = 0;	
 	this.levelno = 1;
-	this.maxgoes = 10;
-	this.leveltotal = 5;
-	this.movedis = 4;
+	this.maxgoes = levellen;
+	this.leveltotal = leveltotal;
+	this.movedis = 5;	
+	this.speeddecr = speeddecr;
 	
 	Game.prototype.startnextlevel = function() {
 		document.getElementById("levelno").innerHTML = this.levelno;
+		this.speed = speedstart;
 		Game.prototype.level = new Level(this,this.levelno++);
 		this.level.start();
 	}	
@@ -35,16 +38,15 @@ function Game() {
 }
 
 function Level(game, letters) {
-	this.lives = 3;
+	//this.lives = 3;
 	this.missed = 0;
-	this.speed = 30;
+	//this.speed = game.speed;
 	this.score = 0;
 	this.active = 0;
 	Level.prototype.letters = new Letters(letters);
 	Level.prototype.play = play;
 	this.score_incr = 10;
 	this.timeout;
-	//document.getElementById("test").innerHTML = this.movedis;
 	Level.prototype.coordsls = [new Coords(0,0,game.movedis,game.movedis,function() {return this.y >= height-25;}), 
 				 new Coords(width,0,-game.movedis,game.movedis,function() {return this.y >= height-25;}), 
 				 new Coords(0,height,game.movedis,-game.movedis,function() {return this.y <= 25;}), 
@@ -62,10 +64,10 @@ function Level(game, letters) {
 	}
 	
 	Level.prototype.increasespeed = function () {
-		if (this.speed >= 1)
+		if (game.speed >= 1)
 		{
-			this.speed = this.speed - 3;
-			//document.getElementById("speed").innerHTML = this.speed;
+			game.speed = game.speed - game.speeddecr;
+			document.getElementById("test").innerHTML = game.speed;
 		}
 	}
 	
@@ -216,7 +218,7 @@ function play() {
 	if (this.active == 1) {
 			//use closure to recursively call play so it can reference Level fields
 			var gthis = this
-			timeout=setTimeout(function(){ gthis.play();}, this.speed);
+			timeout=setTimeout(function(){ gthis.play();}, game.speed);
 	}
 }
 
@@ -231,7 +233,11 @@ function listen(event) {
 	if (game == null || game.level.active == 0) {		
 		if (game == null || game.levelsdone())
 		{
-			game = new Game();		
+			var nooflevels = $("#nooflevels").val();
+			var levellen = $("#levellen").val();
+			var speeddecrement = parseInt($("#speeddecrement").val());
+			speedstart = parseInt($("#speedstart").val());
+			game = new Game(nooflevels, levellen, speeddecrement);		
 			document.getElementById("leveltotal").innerHTML = game.leveltotal;
 		}
 		

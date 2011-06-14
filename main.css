@@ -12,7 +12,12 @@ body {
 	background-color:#eff;
 	}
 	
+
 #page {
+	xheight: 500px; 
+}
+	
+#gameborder {
 	width:500px;
 	margin:0px auto;
 	text-align:center;
@@ -36,7 +41,8 @@ body {
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#63b0ff', endColorstr='#c2eeff')";
 	/*Element must have a height (not auto)*/
 	/*All filters must be placed together*/
-
+	margin-left: 100px; 
+	float: left;
 }
 	
 #canvas {
@@ -98,4 +104,15 @@ body {
 	width: 490px;
 	xfloat: left;
 	xmargin-bottom: 5px;
+}
+
+#options {
+	width: 200px;
+	float: left;
+	xmargin-left: 100px;
+	xmargin: auto;
+	border: red solid 1px;
+	height: auto;
+	xmargin-bottom: 10px;
+	xheight: 400px;
 }
