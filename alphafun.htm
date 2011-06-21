@@ -26,6 +26,14 @@
 				</div>
 			</div>
 			<div id="options">
+				<span class="heading">Quick Settings</span>
+				<ul>
+					<li><a href="javascript: updateSettings(1, 50, 100, 2);">Infant Setting</a></li>
+					<li><a href="javascript: updateSettings(3, 30, 100, 2);">Beginner</a></li>
+					<li><a href="javascript: updateSettings(4, 20, 50, 3);">Intermediate</a></li>
+					<li><a href="javascript: updateSettings(5, 10, 30, 5);">Advanced</a></li>
+				</ul>
+				<span class="heading">Custom Settings</span>
 				Number of Levels: <select id="nooflevels">
 					<option value="1">1</option>
 					<option>2</option>
@@ -37,8 +45,8 @@
 					<option>5</option>
 					<option selected="true">10</option>
 					<option>20</option>
+					<option>30</option>
 					<option>50</option>
-					<option>75</option>
 				</select><br />
 				Speed Start:<select id="speedstart">
 					<option value="100">Easy</option>
@@ -49,7 +57,9 @@
 					<option value="2">Easy</option>
 					<option selected="true" value="3">Medium</option>
 					<option value="5">Hard</option>
-				</select>
+				</select>		
+				
+				<span class="heading button"><a href="javascript: resetHighScoreCookie();">Reset High Score</a></span>				
 			</div>
 		</div>
 		<span id="test"></span><br />

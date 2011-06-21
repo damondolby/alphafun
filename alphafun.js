@@ -291,12 +291,17 @@ function setCookie(){
 	if (game.gamescore > highscore.score) {
 		highscore.score = game.gamescore;
 		highscore.missed = game.gamemissed;
+		updateCookie(highscore.score, highscore.missed);
 	}
+}
+
+function updateCookie(score, missed)
+{
 	var exdate=new Date();
 	exdate.setDate(exdate.getDate() + 365);
-	document.cookie = "score=" + highscore.score + "#missed=" + highscore.missed + "; expires=" + exdate.toUTCString();		
-	document.getElementById("highscore").innerHTML = highscore.score;
-	document.getElementById("highmissed").innerHTML = highscore.missed;
+	document.cookie = "score=" + score + "#missed=" + missed + "; expires=" + exdate.toUTCString();		
+	document.getElementById("highscore").innerHTML = score;
+	document.getElementById("highmissed").innerHTML = missed;
 }
 
 function initHighScoreFromCookie(){	
@@ -316,3 +321,18 @@ function initHighScoreFromCookie(){
 	document.getElementById("highscore").innerHTML = highscore.score;
 	document.getElementById("highmissed").innerHTML = highscore.missed;
 }
+
+function resetHighScoreCookie()
+{
+	updateCookie(0, 0);
+}
+
+function updateSettings(nooflevels, levellen, speedstart, speeddecrement)
+{
+	$("#nooflevels").val(nooflevels);
+	$("#levellen").val(levellen);
+	$("#speedstart").val(speedstart);
+	$("#speeddecrement").val(speeddecrement);
+}
+
+
