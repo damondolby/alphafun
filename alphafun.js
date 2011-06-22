@@ -67,7 +67,7 @@ function Level(game, letters) {
 		if (game.speed >= 1)
 		{
 			game.speed = game.speed - game.speeddecr;
-			document.getElementById("test").innerHTML = game.speed;
+			//document.getElementById("test").innerHTML = game.speed;
 		}
 	}
 	
