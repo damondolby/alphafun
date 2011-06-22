@@ -102,26 +102,63 @@ body {
 	color: purple;
 	font-family: Times, serif;
 	font-weight: bold;
-	width: 490px;
-	xfloat: left;
-	xmargin-bottom: 5px;
+	font-size: 16px;
+	padding: 20px;
+	border-radius: 34px;
+	-moz-border-radius: 34px;
+	-webkit-border-radius: 34px;
+	/*IE DOES NOT SUPPORT BORDER RADIUS*/
+	box-shadow:0px 0px 16px #000000;
+	-moz-box-shadow:0px 0px 16px #000000;
+	-webkit-box-shadow:0px 0px 16px #000000;
+	/*IE DOES NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+	background: linear-gradient(top, #EEA2AD, #EEE5DE);
+	/*--OPERA & IE9 DO NOT SUPPORT GRADIENT BACKGROUNDS--*/
+	background: -moz-linear-gradient(top, #EEA2AD, #EEE5DE);
+	background: -webkit-gradient(linear, center top, center bottom, from(#EEA2AD), to(#EEE5DE));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEA2AD', endColorstr='#EEE5DE');
+	/*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+	/*Element must have a height (not auto)*/
+	/*All filters must be placed together*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEA2AD', endColorstr='#EEE5DE')";
 }
 
 #options {
-	width: 200px;
+	width: 300px;
 	float: left;
 	margin-left: 50px;
-	xmargin: auto;
-	borderx: red solid 1px;
-	heightx: auto;
-	margin-top: 60px;
-	xheight: 400px;
+	margin-top: 30px;
 	text-align: right;
-	font-size: 11px;
+	font-size: 12px;
+	padding: 20px;
+	
+	border-radius: 34px;
+	-moz-border-radius: 34px;
+	-webkit-border-radius: 34px;
+	/*IE DOES NOT SUPPORT BORDER RADIUS*/
+	box-shadow:0px 0px 16px #000000;
+	-moz-box-shadow:0px 0px 16px #000000;
+	-webkit-box-shadow:0px 0px 16px #000000;
+	/*IE DOES NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+	background: linear-gradient(top, #EEA2AD, #EEE5DE);
+	/*--OPERA & IE9 DO NOT SUPPORT GRADIENT BACKGROUNDS--*/
+	background: -moz-linear-gradient(top, #EEA2AD, #EEE5DE);
+	background: -webkit-gradient(linear, center top, center bottom, from(#EEA2AD), to(#EEE5DE));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEA2AD', endColorstr='#EEE5DE');
+	/*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+	/*Element must have a height (not auto)*/
+	/*All filters must be placed together*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEA2AD', endColorstr='#EEE5DE')";
+}
+
+#options .settings {
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #options select {
-	font-size: 12px;
+	font-size: 10px;
 	margin-left: 10px;
 	xtext-align: right;
 	width: 75px;
@@ -149,6 +186,15 @@ a:hover{
 	color: #AAA;
 }
 
-.button{
+#high .button{
+	display: block;
+	padding: 2px;
+	margin-top: 10px;
+	border: solid grey 1px;
+	width: 75px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #EEE;
+	font-size: 10px;
 }
 	
